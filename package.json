@@ -29,6 +29,8 @@
     "@ogma/nestjs-module": "^0.1.0",
     "@ogma/platform-express": "^0.1.0",
     "@ogma/platform-graphql": "^0.1.0",
+    "class-transformer": "^0.2.3",
+    "class-validator": "^0.12.2",
     "reflect-metadata": "^0.1.13",
     "rimraf": "^3.0.2",
     "rxjs": "^6.5.5"

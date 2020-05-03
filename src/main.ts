@@ -1,3 +1,4 @@
+import { ValidationPipe } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
 import { OgmaService } from '@ogma/nestjs-module';
 import { AppModule } from './app.module';
@@ -9,6 +10,16 @@ async function bootstrap() {
   app.useLogger(logger);
 
   const config = app.get(ApiConfigService);
+
+  app.useGlobalPipes(
+    new ValidationPipe({
+      whitelist: true,
+      skipMissingProperties: false,
+      forbidUnknownValues: true,
+      transform: true,
+    }),
+  );
+
   await app.listen(config.port);
 
   logger.silly(`http://localhost:${config.port}`);
