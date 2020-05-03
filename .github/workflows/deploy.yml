@@ -15,8 +15,8 @@ jobs:
         with:
           node-version: '12.x'
 
-      - run: npm ci
-      - run: npm run build
+      - run: yarn
+      - run: yarn build
 
       - name: ZEIT Now Deployment
         uses: amondnet/now-deployment@v2.0.2
