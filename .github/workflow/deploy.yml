@@ -1,5 +1,11 @@
-name: deploy production api
-on: [pull_request]
+name: Deploy Production API
+
+on:
+  push:
+    branches: [master]
+  pull_request:
+    branches: [master]
+
 jobs:
   deploy:
     runs-on: ubuntu-latest
@@ -9,7 +15,7 @@ jobs:
       - name: ZEIT Now Deployment
         uses: amondnet/now-deployment@v2.0.2
         with:
-          now-args: "--prod" #Optional
+          now-args: '--prod' #Optional
           now-org-id: ${{ secrets.ORG_ID}} #Required
           now-project-id: ${{ secrets.PROJECT_ID}} #Required
           working-directory: ./
