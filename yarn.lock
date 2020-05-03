@@ -318,6 +318,13 @@
     exec-sh "^0.3.2"
     minimist "^1.2.0"
 
+"@golevelup/nestjs-modules@0.4.0":
+  version "0.4.0"
+  resolved "https://registry.yarnpkg.com/@golevelup/nestjs-modules/-/nestjs-modules-0.4.0.tgz#5efd84de12dc0e74c80e3a7641026a7508384f7b"
+  integrity sha512-PTEUana6AXbOwsjyOt7gfVZYlum/kekWZwU46+F6HmHJNqU9EmrAfUDm4TdX8zSdERbG8cmq9SSAlOPKOi8hOQ==
+  dependencies:
+    shortid "^2.2.14"
+
 "@istanbuljs/load-nyc-config@^1.0.0":
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/@istanbuljs/load-nyc-config/-/load-nyc-config-1.0.0.tgz#10602de5570baea82f8afbfa2630b24e7a8cfe5b"
@@ -608,6 +615,29 @@
     chalk "^2.4.1"
     consola "^2.3.0"
     node-fetch "^2.3.0"
+
+"@ogma/logger@^0.1.0":
+  version "0.1.0"
+  resolved "https://registry.yarnpkg.com/@ogma/logger/-/logger-0.1.0.tgz#165574e235f126ac8d0dc84734ef2a210ea145e3"
+  integrity sha512-SiMilyuT4SmB1X3YHKt0tIcY9LeZ7WQ3zWr7mPXPRah+pYp9d/Q8xJn4BUbjvILVvnhHmd//76P+ThmP9PC7yQ==
+
+"@ogma/nestjs-module@^0.1.0":
+  version "0.1.0"
+  resolved "https://registry.yarnpkg.com/@ogma/nestjs-module/-/nestjs-module-0.1.0.tgz#6003d9432862e598d6c50796935d1f70ebcb1e39"
+  integrity sha512-Boybs1NwHpzQmaQDqNArry65+gXIQdqMyB+G536fpXlXSATzrnSmeGp6iWuwt88KIA+ZPjAdt5XvfhKh5Uaxsg==
+  dependencies:
+    "@golevelup/nestjs-modules" "0.4.0"
+    "@ogma/logger" "^0.1.0"
+
+"@ogma/platform-express@^0.1.0":
+  version "0.1.0"
+  resolved "https://registry.yarnpkg.com/@ogma/platform-express/-/platform-express-0.1.0.tgz#c90ecee15207dc80e6448db40e5e8ed8b674cc1d"
+  integrity sha512-CCqwFQXU1CP8g4/FxtaxgWf1X3HHYJXGRA6S1/hUR5hvpHuilFSMtHaWT7lttfPNJn+UvCbNcr0gEBm/URzhuA==
+
+"@ogma/platform-graphql@^0.1.0":
+  version "0.1.0"
+  resolved "https://registry.yarnpkg.com/@ogma/platform-graphql/-/platform-graphql-0.1.0.tgz#45381a361bd752312505c8ccadeae95e3c2e0a2a"
+  integrity sha512-w1Rybs0moo1KVpk4Qn+pNlFu2eisiv3VOwyWkCmfikpNkgeAVNXi+e1Jqioe9awZUxkbdji/alcNfjbR2uJVeA==
 
 "@schematics/schematics@0.901.1":
   version "0.901.1"
@@ -4685,6 +4715,11 @@ nan@^2.12.1:
   resolved "https://registry.yarnpkg.com/nan/-/nan-2.14.1.tgz#d7be34dfa3105b91494c3147089315eff8874b01"
   integrity sha512-isWHgVjnFjh2x2yuJ/tj3JbwoHu3UC2dX5G/88Cm24yB6YopVgxvBObDY7n5xW6ExmFhJpSEQqFPvq9zaXc8Jw==
 
+nanoid@^2.1.0:
+  version "2.1.11"
+  resolved "https://registry.yarnpkg.com/nanoid/-/nanoid-2.1.11.tgz#ec24b8a758d591561531b4176a01e3ab4f0f0280"
+  integrity sha512-s/snB+WGm6uwi0WjsZdaVcuf3KJXlfGl2LcxgwkEwJF0D/BWzVWAZW/XY4bFaiR7s0Jk3FPvlnepg1H1b1UwlA==
+
 nanomatch@^1.2.9:
   version "1.2.13"
   resolved "https://registry.yarnpkg.com/nanomatch/-/nanomatch-1.2.13.tgz#b87a8aa4fc0de8fe6be88895b38983ff265bd119"
@@ -5882,6 +5917,13 @@ shellwords@^0.1.1:
   version "0.1.1"
   resolved "https://registry.yarnpkg.com/shellwords/-/shellwords-0.1.1.tgz#d6b9181c1a48d397324c84871efbcfc73fc0654b"
   integrity sha512-vFwSUfQvqybiICwZY5+DAWIPLKsWO31Q91JSKl3UYv+K5c2QRPzn0qzec6QPu1Qc9eHYItiP3NdJqNVqetYAww==
+
+shortid@^2.2.14:
+  version "2.2.15"
+  resolved "https://registry.yarnpkg.com/shortid/-/shortid-2.2.15.tgz#2b902eaa93a69b11120373cd42a1f1fe4437c122"
+  integrity sha512-5EaCy2mx2Jgc/Fdn9uuDuNIIfWBpzY4XIlhoqtXF6qsf+/+SGZ+FxDdX/ZsMZiWupIWNqAEmiNY4RC+LSmCeOw==
+  dependencies:
+    nanoid "^2.1.0"
 
 signal-exit@^3.0.0, signal-exit@^3.0.2:
   version "3.0.3"
