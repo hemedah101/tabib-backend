@@ -1,4 +1,8 @@
+import { registerEnumType } from '@nestjs/graphql';
+
 export enum Gender {
-  MALE = 'male',
-  FEMALE = 'female',
+  MALE = 'MALE',
+  FEMALE = 'FEMALE',
 }
+
+registerEnumType(Gender, { name: 'Gender' });

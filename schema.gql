@@ -6,15 +6,43 @@ type UserVm {
   _id: String!
   name: String!
   email: String!
-  gender: String!
+  gender: Gender!
   dateOfBirth: String!
   verified: Boolean!
-  reviewed: Boolean!
+  review: ReviewStatus!
   avatar: String
+}
+
+enum Gender {
+  MALE
+  FEMALE
+}
+
+enum ReviewStatus {
+  PENDING
+  ACCEPTED
+  REJECTED
+}
+
+type UsersVm {
+  items: [UserVm!]!
+  total: Int!
 }
 
 type Query {
   user(id: String!): UserVm!
+  users(input: PaginationInput): UsersVm!
+}
+
+input PaginationInput {
+  page: Int = 1
+  limit: Int = 10
+  filter: [KeyValuePairInput!] = []
+}
+
+input KeyValuePairInput {
+  key: String!
+  value: String
 }
 
 type Mutation {
@@ -26,5 +54,5 @@ input NewUserInput {
   email: String!
   password: String!
   dateOfBirth: String!
-  gender: String!
+  gender: Gender!
 }

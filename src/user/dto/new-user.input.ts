@@ -1,18 +1,11 @@
 import { Field, InputType } from '@nestjs/graphql';
-import {
-  IsDateString,
-  IsEmail,
-  IsEnum,
-  IsNotEmpty,
-  IsString,
-} from 'class-validator';
+import { IsDateString, IsEmail, IsNotEmpty } from 'class-validator';
 import { Gender } from '../enums/gender.enum';
 
 @InputType()
 export class NewUserInput {
   @Field()
   @IsNotEmpty()
-  @IsString()
   name: string;
 
   @Field()
@@ -21,14 +14,12 @@ export class NewUserInput {
 
   @Field()
   @IsNotEmpty()
-  @IsString()
   password: string;
 
   @Field()
   @IsDateString()
   dateOfBirth: string;
 
-  @Field()
-  @IsEnum(Gender)
+  @Field(() => Gender)
   gender: Gender;
 }

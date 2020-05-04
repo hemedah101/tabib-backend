@@ -1,7 +1,9 @@
-import { Field, ObjectType } from '@nestjs/graphql';
-import { Exclude, Transform } from 'class-transformer';
+import { Field, HideField, ObjectType } from '@nestjs/graphql';
+import { Transform } from 'class-transformer';
 import { Types } from 'mongoose';
 import { BaseModelVm } from 'src/core/models';
+import { Gender } from '../enums/gender.enum';
+import { ReviewStatus } from '../enums/review.enum';
 
 @ObjectType()
 export class UserVm extends BaseModelVm {
@@ -15,8 +17,8 @@ export class UserVm extends BaseModelVm {
   @Field()
   email: string;
 
-  @Field()
-  gender: string;
+  @Field(() => Gender)
+  gender: Gender;
 
   @Field()
   dateOfBirth: string;
@@ -24,12 +26,12 @@ export class UserVm extends BaseModelVm {
   @Field()
   verified: boolean;
 
-  @Field()
-  reviewed: boolean;
+  @Field(() => ReviewStatus)
+  review: ReviewStatus;
 
-  @Field({ nullable: true })
+  @Field()
   avatar?: string;
 
-  @Exclude()
+  @HideField()
   hash;
 }
