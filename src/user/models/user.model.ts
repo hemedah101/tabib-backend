@@ -21,6 +21,10 @@ export class User extends BaseModel {
   verified: boolean;
   @prop({ enum: ReviewStatus, default: ReviewStatus.PENDING })
   review: ReviewStatus;
+  @prop()
+  refreshToken: string;
+  @prop({ default: 0 })
+  tokenVersion: number;
 
   static get model(): ModelType<User> {
     return getModelForClass(User, { schemaOptions });

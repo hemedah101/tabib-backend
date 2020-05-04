@@ -34,4 +34,8 @@ export class UserVm extends BaseModelVm {
 
   @HideField()
   hash;
+  @HideField()
+  refreshToken;
+  @HideField()
+  tokenVersion;
 }

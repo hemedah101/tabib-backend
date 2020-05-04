@@ -1,8 +1,10 @@
 import { Args, Mutation, Query, Resolver } from '@nestjs/graphql';
 import { NotFoundError } from 'src/core/errors/graphql.error';
 import { PaginationInput } from 'src/core/shared';
+import { LoginInput } from './dto/login-user.input';
 import { NewUserInput } from './dto/new-user.input';
 import { UserService } from './user.service';
+import { LoginVm } from './view-models/login-vm.model';
 import { UserVm } from './view-models/user-vm.model';
 import { UsersVm } from './view-models/users-vm.model';
 
@@ -14,6 +16,12 @@ export class UserResolver {
   async signup(@Args('input') input: NewUserInput): Promise<UserVm> {
     const user = await this.userService.createUser(input);
     return new UserVm(user);
+  }
+
+  @Mutation(() => LoginVm)
+  async login(@Args('input') input: LoginInput) {
+    const user = await this.userService.loginUser(input);
+    return new LoginVm({ ...user });
   }
 
   // @Mutation(() => UserVm)
