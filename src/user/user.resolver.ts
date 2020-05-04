@@ -1,5 +1,7 @@
+import { UseGuards } from '@nestjs/common';
 import { Args, Mutation, Query, Resolver } from '@nestjs/graphql';
 import { NotFoundError } from 'src/core/errors/graphql.error';
+import { GqlAuthGuard } from 'src/core/guards';
 import { PaginationInput } from 'src/core/shared';
 import { LoginInput } from './dto/login-user.input';
 import { NewUserInput } from './dto/new-user.input';
@@ -30,7 +32,12 @@ export class UserResolver {
   // }
 
   @Query(() => UserVm)
-  async user(@Args('id') id: string): Promise<UserVm> {
+  @UseGuards(GqlAuthGuard)
+  async user(
+    @Args('id') id: string,
+    // @User() users: JWTPayload,
+  ): Promise<UserVm> {
+    // console.log({ users });
     const user = await this.userService.findById(id);
     if (!user) {
       throw new NotFoundError('User');
