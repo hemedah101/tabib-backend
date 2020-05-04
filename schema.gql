@@ -24,6 +24,11 @@ enum ReviewStatus {
   REJECTED
 }
 
+type LoginVm {
+  token: String!
+  user: UserVm!
+}
+
 type UsersVm {
   items: [UserVm!]!
   total: Int!
@@ -47,6 +52,7 @@ input KeyValuePairInput {
 
 type Mutation {
   signup(input: NewUserInput!): UserVm!
+  login(input: LoginInput!): LoginVm!
 }
 
 input NewUserInput {
@@ -55,4 +61,9 @@ input NewUserInput {
   password: String!
   dateOfBirth: String!
   gender: Gender!
+}
+
+input LoginInput {
+  email: String!
+  password: String!
 }
