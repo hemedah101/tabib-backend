@@ -1,16 +1,24 @@
-import { ModuleConfigFactory } from '@golevelup/nestjs-modules';
 import { Injectable } from '@nestjs/common';
+import {
+  MongooseModuleOptions,
+  MongooseOptionsFactory,
+} from '@nestjs/mongoose';
+import * as mongoose from 'mongoose';
 import { ConfigService } from '../config.service';
-import { DatabaseModuleOptions } from '../interfaces/database-options.interface';
+
+mongoose.set('useNewUrlParser', true);
+mongoose.set('useUnifiedTopology', true);
+mongoose.set('useFindAndModify', false);
+mongoose.set('useCreateIndex', true);
+mongoose.set('debug', true);
 
 @Injectable()
-export class DatabaseModuleConfig
-  implements ModuleConfigFactory<DatabaseModuleOptions> {
+export class MongooseModuleConfig implements MongooseOptionsFactory {
   constructor(private readonly configService: ConfigService) {}
 
-  createModuleConfig(): DatabaseModuleOptions {
+  createMongooseOptions(): MongooseModuleOptions {
     return {
-      connectionUrl: this.configService.databaseUrl,
+      uri: this.configService.databaseUrl,
     };
   }
 }

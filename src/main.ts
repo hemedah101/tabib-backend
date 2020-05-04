@@ -15,6 +15,9 @@ async function bootstrap() {
   configure(app, config, logger);
   await app.listen(port);
 
-  logger.log(`Listening at http://localhost:${port}`, 'NestApplication');
+  logger.log(
+    `Listening at http://localhost:${port}/graphql`,
+    'NestApplication',
+  );
 }
 bootstrap();
