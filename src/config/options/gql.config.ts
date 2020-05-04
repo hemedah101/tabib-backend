@@ -14,7 +14,10 @@ export class GqlModuleConfig implements GqlOptionsFactory {
       },
       playground: {
         workspaceName: 'Admin Gateway',
-        settings: { 'request.credentials': 'same-origin' },
+        settings: {
+          'request.credentials': 'same-origin',
+          'editor.fontSize': 20,
+        },
       },
       debug: true,
       // path: 'graph',

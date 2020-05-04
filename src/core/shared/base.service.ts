@@ -2,7 +2,9 @@ import { DocumentType, ModelType } from '@typegoose/typegoose/lib/types';
 import { Types } from 'mongoose';
 import { ValidationError } from '../errors';
 import { BaseModel } from '../models';
-import { IBaseService } from './ibase.service';
+import { ExtractMongoFilter } from '../utils';
+import { IBaseService, IPagination } from './ibase.service';
+import { PaginationInput } from './shared.args';
 
 export class BaseService<T extends BaseModel> implements IBaseService<T> {
   constructor(protected model: ModelType<T>) {}
@@ -26,28 +28,20 @@ export class BaseService<T extends BaseModel> implements IBaseService<T> {
     return await this.model.findOne(filter).exec();
   }
 
-  // async findMany(
-  //   filter: any,
-  //   page?: number,
-  //   size?: number,
-  // ): Promise<IPagination<T>> {
-  //   // No pagination
-  //   if (!page && !size) {
-  //     const items = await this.model.find(filter);
-  //     return { items };
-  //   }
+  async findMany(input?: PaginationInput): Promise<IPagination<T>> {
+    const { filter, page, limit } = input;
 
-  //   // Pagination
-  //   const defaultSize = size ? size : 10;
-  //   const total = await this.count(filter);
-  //   const items = await this.model
-  //     .find(filter)
-  //     .limit(defaultSize)
-  //     .skip(Math.abs(page - 1) * defaultSize)
-  //     .exec();
+    const mongoFilter = ExtractMongoFilter(filter);
+    console.log({ mongoFilter });
+    const total = await this.count(mongoFilter);
+    const items = await this.model
+      .find(mongoFilter)
+      .skip(Math.abs(page - 1) * limit)
+      .limit(limit)
+      .exec();
 
-  //   return { items, total: Math.ceil(total / defaultSize) };
-  // }
+    return { items, total: Math.ceil(total / limit) };
+  }
 
   async count(filter: any): Promise<number> {
     return await this.model.countDocuments(filter).exec();

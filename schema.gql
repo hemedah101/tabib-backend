@@ -1,0 +1,58 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+type UserVm {
+  _id: String!
+  name: String!
+  email: String!
+  gender: Gender!
+  dateOfBirth: String!
+  verified: Boolean!
+  review: ReviewStatus!
+  avatar: String
+}
+
+enum Gender {
+  MALE
+  FEMALE
+}
+
+enum ReviewStatus {
+  PENDING
+  ACCEPTED
+  REJECTED
+}
+
+type UsersVm {
+  items: [UserVm!]!
+  total: Int!
+}
+
+type Query {
+  user(id: String!): UserVm!
+  users(input: PaginationInput): UsersVm!
+}
+
+input PaginationInput {
+  page: Int = 1
+  limit: Int = 10
+  filter: [KeyValuePairInput!] = []
+}
+
+input KeyValuePairInput {
+  key: String!
+  value: String
+}
+
+type Mutation {
+  signup(input: NewUserInput!): UserVm!
+}
+
+input NewUserInput {
+  name: String!
+  email: String!
+  password: String!
+  dateOfBirth: String!
+  gender: Gender!
+}
