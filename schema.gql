@@ -1,0 +1,30 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+type UserVm {
+  _id: String!
+  name: String!
+  email: String!
+  gender: String!
+  dateOfBirth: String!
+  verified: Boolean!
+  reviewed: Boolean!
+  avatar: String
+}
+
+type Query {
+  user(id: String!): UserVm!
+}
+
+type Mutation {
+  signup(input: NewUserInput!): UserVm!
+}
+
+input NewUserInput {
+  name: String!
+  email: String!
+  password: String!
+  dateOfBirth: String!
+  gender: String!
+}
