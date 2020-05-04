@@ -1,32 +1,38 @@
 import { Module } from '@nestjs/common';
-import { ConfigModule } from '@nestjs/config';
+import { GraphQLModule } from '@nestjs/graphql';
+import { MongooseModule } from '@nestjs/mongoose';
 import { TerminusModule } from '@nestjs/terminus';
 import { OgmaModule } from '@ogma/nestjs-module';
-import { ExpressParser } from '@ogma/platform-express';
-import { ApiConfigService } from './config/config.service';
-import expressConfig from './config/express.config';
+import { ConfigModule } from './config/config.module';
+import {
+  ConfigModuleConfig,
+  GqlModuleConfig,
+  MongooseModuleConfig,
+  OgmaModuleConfig,
+} from './config/options';
 import { HealthController } from './health.controller';
+import { UserModule } from './user/user.module';
 
 @Module({
   imports: [
-    ConfigModule.forRoot({ load: [expressConfig], isGlobal: true }),
-    OgmaModule.forRoot({
-      service: {
-        logLevel: 'ALL',
-        color: true,
-        json: false,
-        application: 'Tabib',
-      },
-      interceptor: {
-        http: ExpressParser,
-        ws: false,
-        gql: false,
-        rpc: false,
-      },
+    ConfigModule.forRootAsync(ConfigModule, {
+      useClass: ConfigModuleConfig,
     }),
+    OgmaModule.forRootAsync({
+      useClass: OgmaModuleConfig,
+      imports: [ConfigModule.Deferred],
+    }),
+    MongooseModule.forRootAsync({
+      useClass: MongooseModuleConfig,
+      imports: [ConfigModule.Deferred],
+    }),
+    GraphQLModule.forRootAsync({
+      useClass: GqlModuleConfig,
+    }),
+    // GraphQLModule.forRoot({ autoSchemaFile: 'schema.gql' }),
     TerminusModule,
+    UserModule,
   ],
   controllers: [HealthController],
-  providers: [ApiConfigService],
 })
 export class AppModule {}
