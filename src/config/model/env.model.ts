@@ -29,6 +29,7 @@ export const EnvRunType = Record({
   LOG_LEVEL: LogLevel,
   JWT_EXPIRES: String,
   COOKIE_MAX_AGE: String,
+  TOKEN_LENGTH: String,
   APPLICATION: String,
 });
 
@@ -42,4 +43,5 @@ export const defaults = {
   RATE_LIMIT: '1000',
   NODE_ENV: 'development',
   APPLICATION: 'CoretecksProject',
+  TOKEN_LENGTH: '8',
 };

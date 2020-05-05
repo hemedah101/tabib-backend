@@ -58,6 +58,10 @@ export class ConfigService {
     return this.envConfig.COOKIE_MAX_AGE;
   }
 
+  get tokenLength(): number {
+    return Number.parseInt(this.envConfig.TOKEN_LENGTH, 10);
+  }
+
   get globalPrefix(): string {
     return this.envConfig.GLOBAL_PREFIX;
   }

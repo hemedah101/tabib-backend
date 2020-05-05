@@ -47,8 +47,7 @@ export class UserService extends BaseService<User> {
     }
 
     // Validate password
-    const isMatch = await validPassword(password, user.hash);
-    if (!isMatch) {
+    if (!(await validPassword(password, user.hash))) {
       throw new BadRequestError('Invalid Email or Password');
     }
 
@@ -56,6 +55,8 @@ export class UserService extends BaseService<User> {
     const refreshToken = this.authService.createRefreshToken(user);
     const maxAge = this.configService.cookieMaxAge;
     res.cookie('jid', refreshToken, { maxAge, httpOnly: true });
+    user.refreshToken = refreshToken;
+    await user.save();
 
     const token = this.authService.createAccessToken(user);
     return { token, user };
