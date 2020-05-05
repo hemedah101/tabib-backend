@@ -52,7 +52,7 @@ export class AuthService {
     }
   }
 
-  async refreshToken(ctx: any) {
+  async refreshToken(ctx: any): Promise<string> {
     const { req, res } = ctx;
     const refreshToken = req.cookies.jid as string;
     const tokenLength = this.configService.tokenLength;
@@ -71,5 +71,12 @@ export class AuthService {
 
     const token = this.createAccessToken(user);
     return token;
+  }
+
+  async forceLogOut(id: string): Promise<void> {
+    const user = await this.userService.findById(id);
+    const refreshToken = this.createRefreshToken(user);
+    user.refreshToken = refreshToken;
+    await user.save();
   }
 }

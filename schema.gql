@@ -42,7 +42,6 @@ type Query {
   me: UserVm!
   user(id: String!): UserVm!
   users(input: PaginationInput): UsersVm!
-  refreshToken: TokenVm!
 }
 
 input PaginationInput {
@@ -60,6 +59,8 @@ type Mutation {
   signup(input: NewUserInput!): UserVm!
   login(input: LoginInput!): LoginVm!
   updateProfile(input: UpdateProfileInput!): UserVm!
+  refreshToken: TokenVm!
+  logoutAll: Boolean!
 }
 
 input NewUserInput {
