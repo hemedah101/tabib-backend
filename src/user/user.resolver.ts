@@ -1,7 +1,7 @@
 import { UseGuards } from '@nestjs/common';
 import { Args, Mutation, Query, Resolver } from '@nestjs/graphql';
+import { GqlAuthGuard } from 'src/auth/guards';
 import { NotFoundError } from 'src/core/errors/graphql.error';
-import { GqlAuthGuard } from 'src/core/guards';
 import { PaginationInput } from 'src/core/shared';
 import { LoginInput } from './dto/login-user.input';
 import { NewUserInput } from './dto/new-user.input';

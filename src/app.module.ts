@@ -11,7 +11,6 @@ import {
   MongooseModuleConfig,
   OgmaModuleConfig,
 } from './config/options';
-import { CoreModule } from './core/core.module';
 import { HealthController } from './health.controller';
 import { UserModule } from './user/user.module';
 
@@ -34,7 +33,6 @@ import { UserModule } from './user/user.module';
     TerminusModule,
     AuthModule,
     UserModule,
-    CoreModule,
   ],
   controllers: [HealthController],
 })

@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { forwardRef, Inject, Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { DocumentType } from '@typegoose/typegoose';
 import { ModelType } from '@typegoose/typegoose/lib/types';
@@ -14,6 +14,7 @@ import { User } from './models/user.model';
 export class UserService extends BaseService<User> {
   constructor(
     @InjectModel(User.modelName) readonly userModel: ModelType<User>,
+    @Inject(forwardRef(() => AuthService))
     private readonly authService: AuthService,
   ) {
     super(userModel);
