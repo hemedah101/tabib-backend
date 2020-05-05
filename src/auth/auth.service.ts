@@ -5,14 +5,15 @@ import { Types } from 'mongoose';
 import { ConfigService } from 'src/config/config.service';
 import { UnauthorizedError } from 'src/core/errors';
 import { User } from 'src/user/models/user.model';
+import { UserService } from 'src/user/user.service';
 import { JWTPayload } from './jwt-payload.interface';
 
 @Injectable()
 export class AuthService {
   constructor(
+    private readonly userService: UserService,
     private readonly configService: ConfigService,
-  ) // private readonly userService: UserService,
-  {}
+  ) {}
 
   createAccessToken(user: DocumentType<User>): string {
     const { _id, verified, review } = user;
@@ -27,7 +28,7 @@ export class AuthService {
   createRefreshToken(user: DocumentType<User>): string {
     const { _id, tokenVersion } = user;
     const userId = (_id as Types.ObjectId).toHexString();
-    const payload = { userId, tokenVersion: tokenVersion + 1 } as JWTPayload;
+    const payload = { userId, version: tokenVersion } as JWTPayload;
     const secret = this.configService.jwtSecret;
 
     return sign(payload, secret);
@@ -38,11 +39,28 @@ export class AuthService {
       const secret = this.configService.jwtSecret;
       return verify(token, secret) as JWTPayload;
     } catch (error) {
-      if (error.message === 'jwt expired') {
-        // token is valid but expired. should issue
-        console.log('TODO: send a new token here');
-      }
       throw new UnauthorizedError();
     }
+  }
+
+  async refreshToken(ctx: any) {
+    const { req, res } = ctx;
+    const refreshToken = req.cookies.jid;
+    const decoded = this.validateToken(refreshToken);
+    const { userId, version } = decoded;
+
+    const user = await this.userService.findById(userId);
+    if (user.tokenVersion !== version) {
+      throw new UnauthorizedError();
+    }
+
+    const newRefreshToken = this.createRefreshToken(user);
+    res.cookie('jid', newRefreshToken, {
+      maxAge: this.configService.cookieMaxAge,
+      httpOnly: true,
+    });
+
+    const token = this.createAccessToken(user);
+    return token;
   }
 }

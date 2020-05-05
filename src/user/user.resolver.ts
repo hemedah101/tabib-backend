@@ -1,5 +1,5 @@
 import { UseGuards } from '@nestjs/common';
-import { Args, Mutation, Query, Resolver } from '@nestjs/graphql';
+import { Args, Context, Mutation, Query, Resolver } from '@nestjs/graphql';
 import { GqlAuthGuard } from 'src/auth/guards';
 import { JWTPayload } from 'src/auth/jwt-payload.interface';
 import { NotFoundError } from 'src/core/errors/graphql.error';
@@ -7,7 +7,7 @@ import { PaginationInput } from 'src/core/shared';
 import { CurrentUser } from './decorators/user.decorator';
 import { LoginInput } from './dto/login-user.input';
 import { NewUserInput } from './dto/new-user.input';
-import { UpdateUserInput } from './dto/update-user.input';
+import { UpdateProfileInput } from './dto/update-profile.input';
 import { UserService } from './user.service';
 import { LoginVm } from './view-models/login-vm.model';
 import { UserVm } from './view-models/user-vm.model';
@@ -24,8 +24,12 @@ export class UserResolver {
   }
 
   @Mutation(() => LoginVm)
-  async login(@Args('input') input: LoginInput) {
-    const user = await this.userService.loginUser(input);
+  async login(
+    @Args('input') input: LoginInput,
+    @Context() ctx: any,
+  ): Promise<LoginVm> {
+    const { res } = ctx;
+    const user = await this.userService.loginUser(input, res);
     return new LoginVm({ ...user });
   }
 
@@ -33,7 +37,7 @@ export class UserResolver {
   @UseGuards(GqlAuthGuard)
   async updateProfile(
     @CurrentUser() currentUser: JWTPayload,
-    @Args('input') input: UpdateUserInput,
+    @Args('input') input: UpdateProfileInput,
   ) {
     const id = currentUser.userId;
     const user = await this.userService.updateById(id, input);

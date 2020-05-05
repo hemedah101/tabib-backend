@@ -34,10 +34,15 @@ type UsersVm {
   total: Int!
 }
 
+type TokenVm {
+  token: String!
+}
+
 type Query {
   me: UserVm!
   user(id: String!): UserVm!
   users(input: PaginationInput): UsersVm!
+  refreshToken: TokenVm!
 }
 
 input PaginationInput {
@@ -54,7 +59,7 @@ input KeyValuePairInput {
 type Mutation {
   signup(input: NewUserInput!): UserVm!
   login(input: LoginInput!): LoginVm!
-  updateProfile(input: UpdateUserInput!): UserVm!
+  updateProfile(input: UpdateProfileInput!): UserVm!
 }
 
 input NewUserInput {
@@ -70,6 +75,10 @@ input LoginInput {
   password: String!
 }
 
-input UpdateUserInput {
-  name: String!
+input UpdateProfileInput {
+  name: String
+  dateOfBirth: String
+  gender: Gender
+  avatar: String
+  review: ReviewStatus
 }

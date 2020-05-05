@@ -16,13 +16,13 @@ export class User extends BaseModel {
   @prop()
   dateOfBirth: string;
   @prop()
-  avatar?: string;
+  avatar: string;
   @prop({ default: false })
   verified: boolean;
   @prop({ enum: ReviewStatus, default: ReviewStatus.PENDING })
   review: ReviewStatus;
-  @prop()
-  refreshToken: string;
+  // @prop()
+  // refreshToken: string;
   @prop({ default: 0 })
   tokenVersion: number;
 

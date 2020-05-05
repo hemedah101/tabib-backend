@@ -28,6 +28,7 @@ export const EnvRunType = Record({
   PORT: String,
   LOG_LEVEL: LogLevel,
   JWT_EXPIRES: String,
+  COOKIE_MAX_AGE: String,
   APPLICATION: String,
 });
 
@@ -36,7 +37,7 @@ export type EnvRunType = Static<typeof EnvRunType>;
 export const defaults = {
   GLOBAL_PREFIX: '',
   LOG_LEVEL: 'INFO',
-  JWT_EXPIRES: '15m',
+  JWT_EXPIRES: '15min',
   PORT: '4000',
   RATE_LIMIT: '1000',
   NODE_ENV: 'development',

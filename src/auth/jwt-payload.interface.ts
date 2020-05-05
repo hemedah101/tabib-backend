@@ -4,5 +4,5 @@ export interface JWTPayload {
   userId: string;
   verified?: boolean;
   review?: ReviewStatus;
-  tokenVersion?: number;
+  version?: number;
 }

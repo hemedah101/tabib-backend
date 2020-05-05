@@ -54,6 +54,10 @@ export class ConfigService {
     return this.envConfig.JWT_EXPIRES;
   }
 
+  get cookieMaxAge(): string {
+    return this.envConfig.COOKIE_MAX_AGE;
+  }
+
   get globalPrefix(): string {
     return this.envConfig.GLOBAL_PREFIX;
   }
