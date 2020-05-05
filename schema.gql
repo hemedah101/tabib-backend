@@ -35,6 +35,7 @@ type UsersVm {
 }
 
 type Query {
+  me: UserVm!
   user(id: String!): UserVm!
   users(input: PaginationInput): UsersVm!
 }
@@ -53,6 +54,7 @@ input KeyValuePairInput {
 type Mutation {
   signup(input: NewUserInput!): UserVm!
   login(input: LoginInput!): LoginVm!
+  updateProfile(input: UpdateUserInput!): UserVm!
 }
 
 input NewUserInput {
@@ -66,4 +68,8 @@ input NewUserInput {
 input LoginInput {
   email: String!
   password: String!
+}
+
+input UpdateUserInput {
+  name: String!
 }

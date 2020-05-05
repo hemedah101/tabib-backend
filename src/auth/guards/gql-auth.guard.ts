@@ -15,8 +15,7 @@ export class GqlAuthGuard implements CanActivate {
     }
 
     const decoded = this.authService.validateToken(token);
-    console.log({ decoded });
-    ctx.meta.user = decoded;
+    ctx.user = decoded;
     return true;
   }
 
