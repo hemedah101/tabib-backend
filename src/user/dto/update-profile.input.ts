@@ -6,7 +6,7 @@ import {
   IsOptional,
   IsString,
 } from 'class-validator';
-import { Gender } from '../enums/gender.enum';
+import { GenderEnum } from '../enums/gender.enum';
 import { ReviewStatus } from '../enums/review.enum';
 
 @InputType()
@@ -22,10 +22,10 @@ export class UpdateProfileInput {
   @IsDateString()
   dateOfBirth?: string;
 
-  @Field(() => Gender, { nullable: true })
+  @Field(() => GenderEnum, { nullable: true })
   @IsOptional()
-  @IsEnum(Gender)
-  gender?: Gender;
+  @IsEnum(GenderEnum)
+  gender?: GenderEnum;
 
   @Field({ nullable: true })
   @IsOptional()

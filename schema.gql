@@ -6,22 +6,31 @@ type UserVm {
   _id: String!
   name: String!
   email: String!
-  gender: Gender!
   dateOfBirth: String!
   verified: Boolean!
   review: ReviewStatus!
+  gender: GenderEnum!
+  role: RolesEnum!
   avatar: String
-}
-
-enum Gender {
-  MALE
-  FEMALE
 }
 
 enum ReviewStatus {
   PENDING
   ACCEPTED
   REJECTED
+}
+
+enum GenderEnum {
+  MALE
+  FEMALE
+}
+
+enum RolesEnum {
+  DEVELOPER
+  ADMIN
+  MODERATOR
+  DOCTOR
+  USER
 }
 
 type LoginVm {
@@ -68,7 +77,7 @@ input NewUserInput {
   email: String!
   password: String!
   dateOfBirth: String!
-  gender: Gender!
+  gender: GenderEnum!
 }
 
 input LoginInput {
@@ -79,7 +88,7 @@ input LoginInput {
 input UpdateProfileInput {
   name: String
   dateOfBirth: String
-  gender: Gender
+  gender: GenderEnum
   avatar: String
   review: ReviewStatus
 }

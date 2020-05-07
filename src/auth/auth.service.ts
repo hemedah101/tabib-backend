@@ -17,22 +17,13 @@ export class AuthService {
   ) {}
 
   createAccessToken(user: DocumentType<User>): string {
-    const { _id, verified, review } = user;
+    const { _id, verified, review, role, gender } = user;
     const userId = (_id as Types.ObjectId).toHexString();
-    const payload = { userId, verified, review } as JWTPayload;
+    const payload = { userId, verified, review, role, gender } as JWTPayload;
     const secret = this.configService.jwtSecret;
     const expiresIn = this.configService.jwtExpiresIn;
 
     return sign(payload, secret, { expiresIn });
-  }
-
-  createRefreshTokenOld(user: DocumentType<User>): string {
-    const { _id, tokenVersion } = user;
-    const userId = (_id as Types.ObjectId).toHexString();
-    const payload = { userId, version: tokenVersion } as JWTPayload;
-    const secret = this.configService.jwtSecret;
-
-    return sign(payload, secret);
   }
 
   createRefreshToken(user: DocumentType<User>): string {
