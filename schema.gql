@@ -68,6 +68,7 @@ type Mutation {
   signup(input: NewUserInput!): UserVm!
   login(input: LoginInput!): LoginVm!
   updateProfile(input: UpdateProfileInput!): UserVm!
+  updateUser(input: UpdateUserInput!): UserVm!
   refreshToken: TokenVm!
   logoutAll: Boolean!
 }
@@ -90,5 +91,13 @@ input UpdateProfileInput {
   dateOfBirth: String
   gender: GenderEnum
   avatar: String
+}
+
+input UpdateUserInput {
+  name: String
+  dateOfBirth: String
+  gender: GenderEnum
+  avatar: String
+  id: String!
   review: ReviewStatus
 }

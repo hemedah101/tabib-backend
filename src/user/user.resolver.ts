@@ -8,6 +8,7 @@ import { CurrentUser } from './decorators/user.decorator';
 import { LoginInput } from './dto/login-user.input';
 import { NewUserInput } from './dto/new-user.input';
 import { UpdateProfileInput } from './dto/update-profile.input';
+import { UpdateUserInput } from './dto/update-user.input';
 import { UserService } from './user.service';
 import { LoginVm } from './view-models/login-vm.model';
 import { UserVm } from './view-models/user-vm.model';
@@ -41,6 +42,14 @@ export class UserResolver {
   ) {
     const id = currentUser.userId;
     const user = await this.userService.updateById(id, input);
+    return new UserVm(user);
+  }
+
+  @Mutation(() => UserVm)
+  @UseGuards(GqlAuthGuard)
+  async updateUser(@Args('input') input: UpdateUserInput) {
+    const { id, ...updates } = input;
+    const user = await this.userService.updateById(id, updates);
     return new UserVm(user);
   }
 

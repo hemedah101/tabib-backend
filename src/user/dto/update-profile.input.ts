@@ -7,7 +7,6 @@ import {
   IsString,
 } from 'class-validator';
 import { GenderEnum } from '../enums/gender.enum';
-import { ReviewStatus } from '../enums/review.enum';
 
 @InputType()
 export class UpdateProfileInput {
@@ -32,9 +31,4 @@ export class UpdateProfileInput {
   @IsNotEmpty()
   @IsString()
   avatar?: string;
-
-  @Field(() => ReviewStatus, { nullable: true })
-  @IsOptional()
-  @IsEnum(ReviewStatus)
-  review?: ReviewStatus;
 }
