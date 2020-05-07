@@ -3,6 +3,7 @@ import { InjectModel } from '@nestjs/mongoose';
 import { DocumentType } from '@typegoose/typegoose';
 import { ModelType } from '@typegoose/typegoose/lib/types';
 import { AuthService } from 'src/auth/auth.service';
+import { GoogleSub } from 'src/auth/interfaces/google.payload';
 import { ConfigService } from 'src/config/config.service';
 import { BadRequestError, ConflictError, NotFoundError } from 'src/core/errors';
 import { BaseService } from 'src/core/shared';
@@ -59,6 +60,42 @@ export class UserService extends BaseService<User> {
     await user.save();
 
     const token = this.authService.createAccessToken(user);
+    return { token, user };
+  }
+
+  async validateOrCreateUser(
+    profile: GoogleSub,
+  ): Promise<{ token: string; user: DocumentType<User> }> {
+    const {
+      id,
+      displayName,
+      _json: { email, email_verified, picture },
+    } = profile;
+
+    let user: DocumentType<User> = null;
+    const exist = await this.model.findOne({
+      $or: [{ email }, { thirdPartyId: id }],
+    });
+
+    if (exist) {
+      user = exist;
+      if (user.email === email && !user.thirdPartyId.includes(id)) {
+        user.thirdPartyId.push(id);
+      }
+    } else {
+      user = await this.create({
+        email,
+        verified: email_verified,
+        name: displayName,
+        thirdPartyId: [id],
+        avatar: picture,
+      });
+    }
+
+    const token = this.authService.createAccessToken(user);
+    const refreshToken = this.authService.createRefreshToken(user);
+    user.refreshToken = refreshToken;
+    await user.save();
     return { token, user };
   }
 }

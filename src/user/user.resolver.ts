@@ -39,7 +39,7 @@ export class UserResolver {
   async updateProfile(
     @CurrentUser() currentUser: JWTPayload,
     @Args('input') input: UpdateProfileInput,
-  ) {
+  ): Promise<UserVm> {
     const id = currentUser.userId;
     const user = await this.userService.updateById(id, input);
     return new UserVm(user);
@@ -47,7 +47,7 @@ export class UserResolver {
 
   @Mutation(() => UserVm)
   @UseGuards(GqlAuthGuard)
-  async updateUser(@Args('input') input: UpdateUserInput) {
+  async updateUser(@Args('input') input: UpdateUserInput): Promise<UserVm> {
     const { id, ...updates } = input;
     const user = await this.userService.updateById(id, updates);
     return new UserVm(user);

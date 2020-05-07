@@ -26,6 +26,8 @@ export class User extends BaseModel {
   review: ReviewStatus;
   @prop()
   refreshToken: string;
+  @prop()
+  thirdPartyId: string[];
 
   static get model(): ModelType<User> {
     return getModelForClass(User, { schemaOptions });

@@ -6,6 +6,7 @@ import { UserModule } from 'src/user/user.module';
 import { AuthResolver } from './auth.resolver';
 import { AuthService } from './auth.service';
 import { GoogleStrategy } from './strategy/google.strategy';
+import { AuthController } from './auth.controller';
 
 @Module({
   imports: [
@@ -17,5 +18,6 @@ import { GoogleStrategy } from './strategy/google.strategy';
   ],
   providers: [AuthService, AuthResolver, GoogleStrategy],
   exports: [AuthService],
+  controllers: [AuthController],
 })
 export class AuthModule {}

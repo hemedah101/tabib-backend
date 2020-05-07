@@ -1,5 +1,5 @@
 import { Field, HideField, ObjectType } from '@nestjs/graphql';
-import { Transform } from 'class-transformer';
+import { Exclude, Transform } from 'class-transformer';
 import { Types } from 'mongoose';
 import { BaseModelVm } from 'src/core/models';
 import { GenderEnum } from '../enums/gender.enum';
@@ -37,7 +37,12 @@ export class UserVm extends BaseModelVm {
   avatar?: string;
 
   @HideField()
+  @Exclude()
   hash;
   @HideField()
+  @Exclude()
   refreshToken;
+  @HideField()
+  @Exclude()
+  thirdPartyId;
 }
