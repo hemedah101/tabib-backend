@@ -1,16 +1,15 @@
-import { ObjectType } from '@nestjs/graphql';
-import { Exclude } from 'class-transformer';
+import { HideField, ObjectType } from '@nestjs/graphql';
 import { IBaseModel } from './base.model';
 
 @ObjectType()
 export abstract class BaseModelVm implements IBaseModel {
-  @Exclude()
+  @HideField()
   id?;
-  @Exclude()
+  @HideField()
   createdAt?;
-  @Exclude()
+  @HideField()
   updatedAt?;
-  @Exclude()
+  @HideField()
   __v?;
 
   constructor(partial: Partial<any>) {
