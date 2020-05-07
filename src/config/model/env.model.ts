@@ -31,6 +31,9 @@ export const EnvRunType = Record({
   COOKIE_MAX_AGE: String,
   TOKEN_LENGTH: String,
   APPLICATION: String,
+  GOOGLE_CLIENT: String,
+  GOOGLE_SECRET: String,
+  GOOGLE_CALLBACK_URL: String,
 });
 
 export type EnvRunType = Static<typeof EnvRunType>;

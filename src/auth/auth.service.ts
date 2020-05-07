@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { forwardRef, Inject, Injectable } from '@nestjs/common';
 import { DocumentType } from '@typegoose/typegoose';
 import { sign, verify } from 'jsonwebtoken';
 import { Types } from 'mongoose';
@@ -12,6 +12,7 @@ import { JWTPayload } from './jwt-payload.interface';
 @Injectable()
 export class AuthService {
   constructor(
+    @Inject(forwardRef(() => UserService))
     private readonly userService: UserService,
     private readonly configService: ConfigService,
   ) {}

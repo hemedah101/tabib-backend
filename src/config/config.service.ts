@@ -77,4 +77,16 @@ export class ConfigService {
   get applicationName(): string {
     return this.envConfig.APPLICATION;
   }
+
+  get googleClient(): string {
+    return this.envConfig.GOOGLE_CLIENT;
+  }
+
+  get googleSecret(): string {
+    return this.envConfig.GOOGLE_SECRET;
+  }
+
+  get googleCallback(): string {
+    return this.envConfig.GOOGLE_CALLBACK_URL;
+  }
 }
