@@ -65,7 +65,6 @@ export class UserResolver {
   }
 
   @Query(() => UserVm)
-  @UseGuards(GqlAuthGuard)
   async user(@Args('id') id: string): Promise<UserVm> {
     const user = await this.userService.findById(id);
     if (!user) {
@@ -75,7 +74,6 @@ export class UserResolver {
   }
 
   @Query(() => UsersVm)
-  @UseGuards(GqlAuthGuard)
   async users(
     @Args('input', { nullable: true }) input?: PaginationInput,
   ): Promise<UsersVm> {
