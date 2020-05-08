@@ -6,7 +6,6 @@ export interface JWTPayload {
   userId: string;
   verified: boolean;
   review: ReviewStatus;
-  version: number;
   role: RolesEnum;
-  gender: GenderEnum;
+  gender?: GenderEnum;
 }

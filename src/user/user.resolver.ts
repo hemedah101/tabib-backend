@@ -5,6 +5,7 @@ import { JWTPayload } from 'src/auth/jwt-payload.interface';
 import { NotFoundError } from 'src/core/errors/graphql.error';
 import { PaginationInput } from 'src/core/shared';
 import { CurrentUser } from './decorators/user.decorator';
+import { ChangePasswordInput } from './dto/change-password.input';
 import { LoginInput } from './dto/login-user.input';
 import { NewUserInput } from './dto/new-user.input';
 import { UpdateProfileInput } from './dto/update-profile.input';
@@ -42,6 +43,17 @@ export class UserResolver {
   ): Promise<UserVm> {
     const id = currentUser.userId;
     const user = await this.userService.updateById(id, input);
+    return new UserVm(user);
+  }
+
+  @Mutation(() => UserVm)
+  @UseGuards(GqlAuthGuard)
+  async changePassword(
+    @CurrentUser() currentUser: JWTPayload,
+    @Args('input') input: ChangePasswordInput,
+  ): Promise<UserVm> {
+    const id = currentUser.userId;
+    const user = await this.userService.changePassword(id, input);
     return new UserVm(user);
   }
 

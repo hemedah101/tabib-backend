@@ -9,6 +9,7 @@ import { ConfigService } from 'src/config/config.service';
 import { BadRequestError, ConflictError, NotFoundError } from 'src/core/errors';
 import { BaseService } from 'src/core/shared';
 import { generateHashedPassword, validPassword } from 'src/core/utils';
+import { ChangePasswordInput } from './dto/change-password.input';
 import { LoginInput } from './dto/login-user.input';
 import { NewUserInput } from './dto/new-user.input';
 import { User } from './models/user.model';
@@ -62,6 +63,23 @@ export class UserService extends BaseService<User> {
 
     const token = this.authService.createAccessToken(user);
     return { token, user };
+  }
+
+  async changePassword(
+    id: string,
+    input: ChangePasswordInput,
+  ): Promise<DocumentType<User>> {
+    const { password, oldPassword } = input;
+
+    const user = await this.model.findById(id);
+    if (!(await validPassword(oldPassword, user.hash))) {
+      throw new BadRequestError('Old password is not correct');
+    }
+
+    const hash = await generateHashedPassword(password);
+    user.hash = hash;
+    await user.save();
+    return user;
   }
 
   async findOrCreateGoogleUser(

@@ -1,6 +1,7 @@
 import { Field, InputType } from '@nestjs/graphql';
 import {
   IsDateString,
+  IsEmail,
   IsEnum,
   IsNotEmpty,
   IsOptional,
@@ -31,4 +32,9 @@ export class UpdateProfileInput {
   @IsNotEmpty()
   @IsString()
   avatar?: string;
+
+  @Field({ nullable: true })
+  @IsOptional()
+  @IsEmail()
+  email?: string;
 }
