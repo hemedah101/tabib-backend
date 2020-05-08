@@ -89,4 +89,16 @@ export class ConfigService {
   get googleCallback(): string {
     return this.envConfig.GOOGLE_CALLBACK_URL;
   }
+
+  get facebookClient(): string {
+    return this.envConfig.FACEBOOK_CLIENT;
+  }
+
+  get facebookSecret(): string {
+    return this.envConfig.FACEBOOK_SECRET;
+  }
+
+  get facebookCallback(): string {
+    return this.envConfig.FACEBOOK_CALLBACK_URL;
+  }
 }

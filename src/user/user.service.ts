@@ -3,6 +3,7 @@ import { InjectModel } from '@nestjs/mongoose';
 import { DocumentType } from '@typegoose/typegoose';
 import { ModelType } from '@typegoose/typegoose/lib/types';
 import { AuthService } from 'src/auth/auth.service';
+import { FacebookSub } from 'src/auth/interfaces/facebook.payload';
 import { GoogleSub } from 'src/auth/interfaces/google.payload';
 import { ConfigService } from 'src/config/config.service';
 import { BadRequestError, ConflictError, NotFoundError } from 'src/core/errors';
@@ -63,7 +64,7 @@ export class UserService extends BaseService<User> {
     return { token, user };
   }
 
-  async validateOrCreateUser(
+  async findOrCreateGoogleUser(
     profile: GoogleSub,
   ): Promise<{ token: string; user: DocumentType<User> }> {
     const {
@@ -89,6 +90,35 @@ export class UserService extends BaseService<User> {
         name: displayName,
         thirdPartyId: [id],
         avatar: picture,
+      });
+    }
+
+    const token = this.authService.createAccessToken(user);
+    const refreshToken = this.authService.createRefreshToken(user);
+    user.refreshToken = refreshToken;
+    await user.save();
+    return { token, user };
+  }
+
+  async findOrCreateFacebookUser(
+    profile: FacebookSub,
+  ): Promise<{ token: string; user: DocumentType<User> }> {
+    const { id, displayName, photos } = profile;
+    const avatar = photos[0].value;
+    const email = `${id}@facebook.com`;
+
+    let user: DocumentType<User> = null;
+    const exist = await this.model.findOne({ thirdPartyId: id });
+
+    if (exist) {
+      user = exist;
+    } else {
+      user = await this.create({
+        email,
+        verified: true,
+        name: displayName,
+        thirdPartyId: [id],
+        avatar,
       });
     }
 

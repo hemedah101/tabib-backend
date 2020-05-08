@@ -8,13 +8,13 @@ import { GoogleSub } from '../interfaces/google.payload';
 @Injectable()
 export class GoogleStrategy extends PassportStrategy(OAuth2Strategy) {
   constructor(
-    readonly configService: ConfigService,
+    readonly config: ConfigService,
     private readonly userService: UserService,
   ) {
     super({
-      clientID: configService.googleClient,
-      clientSecret: configService.googleSecret,
-      callbackURL: configService.googleCallback,
+      clientID: config.googleClient,
+      clientSecret: config.googleSecret,
+      callbackURL: config.googleCallback,
       scope: ['profile', 'email'],
       passReqToCallback: true,
     });
@@ -26,6 +26,6 @@ export class GoogleStrategy extends PassportStrategy(OAuth2Strategy) {
     refreshToken: string,
     profile: GoogleSub,
   ) {
-    return await this.userService.validateOrCreateUser(profile);
+    return await this.userService.findOrCreateGoogleUser(profile);
   }
 }

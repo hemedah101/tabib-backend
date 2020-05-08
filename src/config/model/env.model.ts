@@ -34,6 +34,9 @@ export const EnvRunType = Record({
   GOOGLE_CLIENT: String,
   GOOGLE_SECRET: String,
   GOOGLE_CALLBACK_URL: String,
+  FACEBOOK_CLIENT: String,
+  FACEBOOK_SECRET: String,
+  FACEBOOK_CALLBACK_URL: String,
 });
 
 export type EnvRunType = Static<typeof EnvRunType>;
