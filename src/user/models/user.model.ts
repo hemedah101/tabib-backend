@@ -16,7 +16,7 @@ export class User extends BaseModel {
   dateOfBirth: string;
   @prop()
   avatar: string;
-  @prop({ enum: GenderEnum })
+  @prop({ enum: GenderEnum, default: '' })
   gender: GenderEnum;
   @prop({ enum: RolesEnum, default: RolesEnum.USER })
   role: RolesEnum;

@@ -14,15 +14,15 @@ export function configure(
   app.use(
     helmet(),
     compression(),
-    cookieParser(),
     rateLimiter({
       windowMs: 10 * 60 * 1000,
       max: config.rateLimit,
       message: 'Too many requests, please try again later.',
     }),
   );
+  app.getHttpAdapter().use(cookieParser());
   app.useGlobalPipes(new ValidationPipe({ transform: true }));
-  app.enableCors({ credentials: true });
+  app.enableCors({ credentials: true, origin: ['http://localhost:3000'] });
   app.setGlobalPrefix(config.globalPrefix);
   logger.log('Application Configuration complete', 'ApplicationConfig');
 }

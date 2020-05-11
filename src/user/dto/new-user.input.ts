@@ -1,6 +1,7 @@
 import { Field, InputType } from '@nestjs/graphql';
 import { IsDateString, IsEmail, IsEnum, IsNotEmpty } from 'class-validator';
 import { GenderEnum } from '../enums/gender.enum';
+import { Transform } from 'class-transformer';
 
 @InputType()
 export class NewUserInput {
@@ -10,6 +11,7 @@ export class NewUserInput {
 
   @Field()
   @IsEmail()
+  @Transform((val: string) => val.trim().toLowerCase())
   email: string;
 
   @Field()

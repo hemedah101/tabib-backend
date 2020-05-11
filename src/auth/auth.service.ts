@@ -48,6 +48,7 @@ export class AuthService {
     const { req, res } = ctx;
     const refreshToken = req.cookies.jid as string;
     const tokenLength = this.configService.tokenLength;
+    console.log(res.cookies);
     const id = refreshToken.slice(tokenLength);
 
     const user = await this.userService.findById(id);
@@ -55,11 +56,11 @@ export class AuthService {
       throw new UnauthorizedError();
     }
 
-    const newRefreshToken = this.createRefreshToken(user);
+    // const newRefreshToken = this.createRefreshToken(user);
     const maxAge = this.configService.cookieMaxAge;
-    res.cookie('jid', newRefreshToken, { maxAge, httpOnly: true });
-    user.refreshToken = newRefreshToken;
-    await user.save();
+    res.cookie('jid', refreshToken, { maxAge, httpOnly: true });
+    // user.refreshToken = newRefreshToken;
+    // await user.save();
 
     const token = this.createAccessToken(user);
     return token;

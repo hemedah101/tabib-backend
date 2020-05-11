@@ -42,14 +42,12 @@ export class UserService extends BaseService<User> {
     input: LoginInput,
     res: any,
   ): Promise<{ token: string; user: DocumentType<User> }> {
-    // Validate email
     const { email, password } = input;
     const user = await this.model.findOne({ email });
-    if (!user) {
-      throw new NotFoundError('User');
-    }
 
-    // Validate password
+    if (!user) {
+      throw new BadRequestError('Invalid Email or Password');
+    }
     if (!(await validPassword(password, user.hash))) {
       throw new BadRequestError('Invalid Email or Password');
     }
@@ -88,6 +86,7 @@ export class UserService extends BaseService<User> {
     const {
       id,
       displayName,
+      // eslint-disable-next-line @typescript-eslint/camelcase
       _json: { email, email_verified, picture },
     } = profile;
 
