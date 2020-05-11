@@ -1,6 +1,7 @@
 import { INestApplication, ValidationPipe } from '@nestjs/common';
 import { OgmaService } from '@ogma/nestjs-module';
 import * as compression from 'compression';
+import * as cookieParser from 'cookie-parser';
 import * as rateLimiter from 'express-rate-limit';
 import * as helmet from 'helmet';
 import { ConfigService } from './config/config.service';
@@ -19,15 +20,9 @@ export function configure(
       message: 'Too many requests, please try again later.',
     }),
   );
-  app.useGlobalPipes(
-    new ValidationPipe({
-      whitelist: true,
-      skipMissingProperties: false,
-      forbidUnknownValues: true,
-      transform: true,
-    }),
-  );
-  app.enableCors({ credentials: true });
+  app.getHttpAdapter().use(cookieParser());
+  app.useGlobalPipes(new ValidationPipe({ transform: true }));
+  app.enableCors({ credentials: true, origin: ['http://localhost:3000'] });
   app.setGlobalPrefix(config.globalPrefix);
   logger.log('Application Configuration complete', 'ApplicationConfig');
 }

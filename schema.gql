@@ -6,16 +6,12 @@ type UserVm {
   _id: String!
   name: String!
   email: String!
-  gender: Gender!
   dateOfBirth: String!
   verified: Boolean!
   review: ReviewStatus!
+  gender: GenderEnum!
+  role: RolesEnum!
   avatar: String
-}
-
-enum Gender {
-  MALE
-  FEMALE
 }
 
 enum ReviewStatus {
@@ -24,12 +20,35 @@ enum ReviewStatus {
   REJECTED
 }
 
+enum GenderEnum {
+  MALE
+  FEMALE
+}
+
+enum RolesEnum {
+  DEVELOPER
+  ADMIN
+  MODERATOR
+  DOCTOR
+  USER
+}
+
+type LoginVm {
+  token: String!
+  user: UserVm!
+}
+
 type UsersVm {
   items: [UserVm!]!
   total: Int!
 }
 
+type TokenVm {
+  token: String!
+}
+
 type Query {
+  me: UserVm!
   user(id: String!): UserVm!
   users(input: PaginationInput): UsersVm!
 }
@@ -47,6 +66,12 @@ input KeyValuePairInput {
 
 type Mutation {
   signup(input: NewUserInput!): UserVm!
+  login(input: LoginInput!): LoginVm!
+  updateProfile(input: UpdateProfileInput!): UserVm!
+  changePassword(input: ChangePasswordInput!): UserVm!
+  updateUser(input: UpdateUserInput!): UserVm!
+  refreshToken: TokenVm!
+  logoutAll: Boolean!
 }
 
 input NewUserInput {
@@ -54,5 +79,33 @@ input NewUserInput {
   email: String!
   password: String!
   dateOfBirth: String!
-  gender: Gender!
+  gender: GenderEnum!
+}
+
+input LoginInput {
+  email: String!
+  password: String!
+}
+
+input UpdateProfileInput {
+  name: String
+  dateOfBirth: String
+  gender: GenderEnum
+  avatar: String
+  email: String
+}
+
+input ChangePasswordInput {
+  password: String!
+  oldPassword: String!
+}
+
+input UpdateUserInput {
+  name: String
+  dateOfBirth: String
+  gender: GenderEnum
+  avatar: String
+  email: String
+  id: String!
+  review: ReviewStatus
 }

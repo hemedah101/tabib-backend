@@ -17,6 +17,7 @@ export class GqlModuleConfig implements GqlOptionsFactory {
         settings: {
           'request.credentials': 'same-origin',
           'editor.fontSize': 20,
+          'editor.fontFamily': "'Ubuntu Mono'",
         },
       },
       debug: true,

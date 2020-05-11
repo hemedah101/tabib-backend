@@ -3,6 +3,7 @@ import { GraphQLModule } from '@nestjs/graphql';
 import { MongooseModule } from '@nestjs/mongoose';
 import { TerminusModule } from '@nestjs/terminus';
 import { OgmaModule } from '@ogma/nestjs-module';
+import { AuthModule } from './auth/auth.module';
 import { ConfigModule } from './config/config.module';
 import {
   ConfigModuleConfig,
@@ -29,8 +30,8 @@ import { UserModule } from './user/user.module';
     GraphQLModule.forRootAsync({
       useClass: GqlModuleConfig,
     }),
-    // GraphQLModule.forRoot({ autoSchemaFile: 'schema.gql' }),
     TerminusModule,
+    AuthModule,
     UserModule,
   ],
   controllers: [HealthController],

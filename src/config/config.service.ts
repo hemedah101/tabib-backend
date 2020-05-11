@@ -54,6 +54,14 @@ export class ConfigService {
     return this.envConfig.JWT_EXPIRES;
   }
 
+  get cookieMaxAge(): string {
+    return this.envConfig.COOKIE_MAX_AGE;
+  }
+
+  get tokenLength(): number {
+    return Number.parseInt(this.envConfig.TOKEN_LENGTH, 10);
+  }
+
   get globalPrefix(): string {
     return this.envConfig.GLOBAL_PREFIX;
   }
@@ -68,5 +76,29 @@ export class ConfigService {
 
   get applicationName(): string {
     return this.envConfig.APPLICATION;
+  }
+
+  get googleClient(): string {
+    return this.envConfig.GOOGLE_CLIENT;
+  }
+
+  get googleSecret(): string {
+    return this.envConfig.GOOGLE_SECRET;
+  }
+
+  get googleCallback(): string {
+    return this.envConfig.GOOGLE_CALLBACK_URL;
+  }
+
+  get facebookClient(): string {
+    return this.envConfig.FACEBOOK_CLIENT;
+  }
+
+  get facebookSecret(): string {
+    return this.envConfig.FACEBOOK_SECRET;
+  }
+
+  get facebookCallback(): string {
+    return this.envConfig.FACEBOOK_CALLBACK_URL;
   }
 }

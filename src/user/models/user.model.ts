@@ -1,8 +1,9 @@
 import { getModelForClass, prop } from '@typegoose/typegoose';
 import { ModelType } from '@typegoose/typegoose/lib/types';
 import { BaseModel, schemaOptions } from 'src/core/models';
-import { Gender } from '../enums/gender.enum';
+import { GenderEnum } from '../enums/gender.enum';
 import { ReviewStatus } from '../enums/review.enum';
+import { RolesEnum } from '../enums/roles.enum';
 
 export class User extends BaseModel {
   @prop()
@@ -11,16 +12,22 @@ export class User extends BaseModel {
   email: string;
   @prop()
   hash: string;
-  @prop({ enum: Gender })
-  gender: Gender;
   @prop()
   dateOfBirth: string;
   @prop()
-  avatar?: string;
+  avatar: string;
+  @prop({ enum: GenderEnum, default: '' })
+  gender: GenderEnum;
+  @prop({ enum: RolesEnum, default: RolesEnum.USER })
+  role: RolesEnum;
   @prop({ default: false })
   verified: boolean;
   @prop({ enum: ReviewStatus, default: ReviewStatus.PENDING })
   review: ReviewStatus;
+  @prop()
+  refreshToken: string;
+  @prop()
+  thirdPartyId: string[];
 
   static get model(): ModelType<User> {
     return getModelForClass(User, { schemaOptions });
