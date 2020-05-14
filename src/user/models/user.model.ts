@@ -14,7 +14,10 @@ export class User extends BaseModel {
   hash: string;
   @prop()
   dateOfBirth: string;
-  @prop()
+  @prop({
+    default:
+      'https://gw.alipayobjects.com/zos/antfincdn/XAosXuNZyF/BiazfanxmamNRoxxVxka.png',
+  })
   avatar: string;
   @prop({ enum: GenderEnum, default: '' })
   gender: GenderEnum;
