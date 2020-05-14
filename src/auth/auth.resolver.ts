@@ -1,19 +1,19 @@
 import { UseGuards } from '@nestjs/common';
-import { Context, Mutation, Resolver } from '@nestjs/graphql';
+import { Context, Mutation, Resolver, Query } from '@nestjs/graphql';
 import { CurrentUser } from 'src/user/decorators/user.decorator';
 import { AuthService } from './auth.service';
 import { GqlAuthGuard } from './guards';
 import { JWTPayload } from './jwt-payload.interface';
-import { TokenVm } from './view-models/token-vm.model';
+import { LoginVm } from 'src/user/view-models/login-vm.model';
 
 @Resolver('Auth')
 export class AuthResolver {
   constructor(private readonly authService: AuthService) {}
 
-  @Mutation(() => TokenVm)
-  async refreshToken(@Context() ctx: any): Promise<TokenVm> {
-    const token = await this.authService.refreshToken(ctx);
-    return new TokenVm({ token });
+  @Query(() => LoginVm)
+  async refreshToken(@Context() ctx: any): Promise<LoginVm> {
+    const { token, user } = await this.authService.refreshToken(ctx);
+    return new LoginVm({ token, user });
   }
 
   @Mutation(() => Boolean)

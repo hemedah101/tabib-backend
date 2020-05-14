@@ -44,26 +44,24 @@ export class AuthService {
     }
   }
 
-  async refreshToken(ctx: any): Promise<string> {
-    const { req, res } = ctx;
+  async refreshToken(
+    ctx: any,
+  ): Promise<{ token: string; user: DocumentType<User> }> {
+    const { req } = ctx;
     const refreshToken = req.cookies.jid as string;
-    const tokenLength = this.configService.tokenLength;
-    console.log(res.cookies);
-    const id = refreshToken.slice(tokenLength);
+    if (!refreshToken) {
+      throw new UnauthorizedError();
+    }
 
+    const tokenLength = this.configService.tokenLength;
+    const id = refreshToken.slice(tokenLength);
     const user = await this.userService.findById(id);
     if (user.refreshToken !== refreshToken) {
       throw new UnauthorizedError();
     }
 
-    // const newRefreshToken = this.createRefreshToken(user);
-    const maxAge = this.configService.cookieMaxAge;
-    res.cookie('jid', refreshToken, { maxAge, httpOnly: true });
-    // user.refreshToken = newRefreshToken;
-    // await user.save();
-
     const token = this.createAccessToken(user);
-    return token;
+    return { token, user };
   }
 
   async forceLogOut(id: string): Promise<void> {
