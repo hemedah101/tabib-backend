@@ -6,7 +6,7 @@ import { AuthService } from 'src/auth/auth.service';
 import { FacebookSub } from 'src/auth/interfaces/facebook.payload';
 import { GoogleSub } from 'src/auth/interfaces/google.payload';
 import { ConfigService } from 'src/config/config.service';
-import { BadRequestError, ConflictError, NotFoundError } from 'src/core/errors';
+import { BadRequestError, ConflictError } from 'src/core/errors';
 import { BaseService } from 'src/core/shared';
 import { generateHashedPassword, validPassword } from 'src/core/utils';
 import { ChangePasswordInput } from './dto/change-password.input';
