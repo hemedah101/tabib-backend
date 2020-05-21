@@ -25,7 +25,10 @@ export class UserService extends BaseService<User> {
     super(userModel);
   }
 
-  async createUser(input: NewUserInput): Promise<DocumentType<User>> {
+  async createUser(
+    input: NewUserInput,
+    res: any,
+  ): Promise<{ token: string; user: DocumentType<User> }> {
     const { email, password, ...rest } = input;
     const exist = await this.model.exists({ email });
     if (exist) {
@@ -35,7 +38,17 @@ export class UserService extends BaseService<User> {
     const hash = await generateHashedPassword(password);
     const user = await this.model.create({ email, hash, ...rest });
 
-    return user;
+    // Create new refresh token
+    const refreshToken = this.authService.createRefreshToken(user);
+    const maxAge = this.configService.cookieMaxAge;
+    res.cookie('jid', refreshToken, { maxAge, httpOnly: true });
+    user.refreshToken = refreshToken;
+    await user.save();
+
+    // Create new access token
+    const token = this.authService.createAccessToken(user);
+
+    return { token, user };
   }
 
   async loginUser(

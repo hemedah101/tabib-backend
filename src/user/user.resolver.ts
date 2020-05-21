@@ -19,10 +19,14 @@ import { UsersVm } from './view-models/users-vm.model';
 export class UserResolver {
   constructor(private readonly userService: UserService) {}
 
-  @Mutation(() => UserVm)
-  async signup(@Args('input') input: NewUserInput): Promise<UserVm> {
-    const user = await this.userService.createUser(input);
-    return new UserVm(user);
+  @Mutation(() => LoginVm)
+  async signup(
+    @Args('input') input: NewUserInput,
+    @Context() ctx: any,
+  ): Promise<LoginVm> {
+    const { res } = ctx;
+    const user = await this.userService.createUser(input, res);
+    return new LoginVm({ ...user });
   }
 
   @Mutation(() => LoginVm)
