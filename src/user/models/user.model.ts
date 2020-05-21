@@ -4,8 +4,13 @@ import { BaseModel, schemaOptions } from 'src/core/models';
 import { GenderEnum } from '../enums/gender.enum';
 import { ReviewStatus } from '../enums/review.enum';
 import { RolesEnum } from '../enums/roles.enum';
+import { RelationshipEnum } from '../enums/relationship.enum';
+
+const DEFAULT_AVATAR =
+  'https://gw.alipayobjects.com/zos/antfincdn/XAosXuNZyF/BiazfanxmamNRoxxVxka.png';
 
 export class User extends BaseModel {
+  // registration information
   @prop()
   name: string;
   @prop({ index: true })
@@ -14,13 +19,18 @@ export class User extends BaseModel {
   hash: string;
   @prop()
   dateOfBirth: string;
-  @prop({
-    default:
-      'https://gw.alipayobjects.com/zos/antfincdn/XAosXuNZyF/BiazfanxmamNRoxxVxka.png',
-  })
-  avatar: string;
-  @prop({ enum: GenderEnum, default: '' })
+  @prop({ enum: GenderEnum })
   gender: GenderEnum;
+  @prop({ default: DEFAULT_AVATAR })
+  avatar: string;
+
+  // more personal information
+  @prop({ enum: RelationshipEnum })
+  relationship: RelationshipEnum;
+  @prop()
+  job: string;
+
+  //
   @prop({ enum: RolesEnum, default: RolesEnum.USER })
   role: RolesEnum;
   @prop({ default: false })

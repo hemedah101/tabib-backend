@@ -1,12 +1,12 @@
 import { Field, InputType } from '@nestjs/graphql';
 import {
   IsDateString,
-  IsEmail,
-  IsEnum,
   IsNotEmpty,
   IsOptional,
   IsString,
+  IsEnum,
 } from 'class-validator';
+import { RelationshipEnum } from '../enums/relationship.enum';
 import { GenderEnum } from '../enums/gender.enum';
 
 @InputType()
@@ -22,7 +22,7 @@ export class UpdateProfileInput {
   @IsDateString()
   dateOfBirth?: string;
 
-  @Field(() => GenderEnum, { nullable: true })
+  @Field({ nullable: true })
   @IsOptional()
   @IsEnum(GenderEnum)
   gender?: GenderEnum;
@@ -35,6 +35,12 @@ export class UpdateProfileInput {
 
   @Field({ nullable: true })
   @IsOptional()
-  @IsEmail()
-  email?: string;
+  @IsNotEmpty()
+  @IsString()
+  job?: string;
+
+  @Field({ nullable: true })
+  @IsOptional()
+  @IsEnum(RelationshipEnum)
+  relationship?: RelationshipEnum;
 }

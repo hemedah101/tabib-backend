@@ -63,6 +63,8 @@ export class AuthService {
       gender: 1,
       name: 1,
       avatar: 1,
+      relationship: 1,
+      job: 1,
     });
     if (user.refreshToken !== refreshToken) {
       throw new UnauthorizedError();
