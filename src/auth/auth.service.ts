@@ -55,11 +55,19 @@ export class AuthService {
 
     const tokenLength = this.configService.tokenLength;
     const id = refreshToken.slice(tokenLength);
-    const user = await this.userService.findById(id);
+    const user = await this.userService.findById(id, {
+      refreshToken: 1,
+      verified: 1,
+      review: 1,
+      role: 1,
+      gender: 1,
+      name: 1,
+      avatar: 1,
+    });
     if (user.refreshToken !== refreshToken) {
       throw new UnauthorizedError();
     }
-
+    console.log(user);
     const token = this.createAccessToken(user);
     return { token, user };
   }

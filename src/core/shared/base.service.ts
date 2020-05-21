@@ -20,8 +20,8 @@ export class BaseService<T extends BaseModel> implements IBaseService<T> {
     return await this.model.create(model);
   }
 
-  async findById(id: string): Promise<DocumentType<T>> {
-    return await this.model.findById(this.toObjectId(id)).exec();
+  async findById(id: string, projection = {}): Promise<DocumentType<T>> {
+    return await this.model.findById(this.toObjectId(id), projection).exec();
   }
 
   async findOne(filter: any): Promise<DocumentType<T>> {
